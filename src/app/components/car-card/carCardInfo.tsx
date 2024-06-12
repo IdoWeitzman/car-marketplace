@@ -25,17 +25,18 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export type CarCardInfoProps = Model &
-  Pick<Car, "picture_urls" | "starting_price">;
+  Pick<Car, "picture_urls" | "starting_price" | "description">;
 
 const CarCardInfo = (props: CarCardInfoProps) => {
   const {
     make,
     model,
     year,
+    description,
     picture_urls: pictureUrls,
     starting_price: startingPrice,
   } = props;
-
+  console.log('description is', description)
   return (
     <>
       <CardHeader
@@ -55,9 +56,7 @@ const CarCardInfo = (props: CarCardInfoProps) => {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {description}
         </Typography>
       </CardContent>
     </>

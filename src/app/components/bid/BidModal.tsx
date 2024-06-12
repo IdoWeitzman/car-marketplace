@@ -7,24 +7,11 @@ import { Button, Slider, Stack } from "@mui/material";
 import { useUser } from "@clerk/nextjs";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
+import { MODAL_STYLE } from "@/app/common-styles";
 
 interface FormValues {
   bidAmount: number;
 }
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  gap: 2,
-};
 
 export interface BidModalProps {
   open: boolean;
@@ -64,7 +51,7 @@ const BidModal = ({ open, onClose, carId }: BidModalProps) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={{...MODAL_STYLE, gap: 2}}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Place a bid
         </Typography>

@@ -7,6 +7,7 @@ export type Car = Prisma.carsGetPayload<{ select: {
     picture_urls: true,
     starting_price: true,
     car_id: true,
+    description: true,
 } }>;
 
 export type Bid = Prisma.bidsGetPayload<{ select: { bid_amount: true,

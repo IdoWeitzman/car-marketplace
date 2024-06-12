@@ -16,20 +16,23 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { SignInButton, useUser, useClerk } from "@clerk/nextjs";
 
 const AppBar = () => {
-  const { isSignedIn, } = useUser();
-    const { signOut } = useClerk();
+  const { isSignedIn } = useUser();
+  const { signOut } = useClerk();
 
-    const settings = [{
-        name: 'Logout',
-        action: () => signOut()
-    }, {
-        name: 'Manage your cars',
-        action: () => window.location.href = '/manage-your-cars'
+  const settings = [
+    {
+      name: "Manage your cars",
+      action: () => (window.location.href = "/manage-your-cars"),
     },
     {
-      name: 'Post new car',
-      action: () => window.location.href = '/post-car'
-  }];
+      name: "Post new car",
+      action: () => (window.location.href = "/post-car"),
+    },
+    {
+      name: "Logout",
+      action: () => signOut(),
+    },
+  ];
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -53,7 +56,7 @@ const AppBar = () => {
     setAnchorElUser(null);
   };
 
-  const onSettingClick = (setting: typeof settings[number]) => {
+  const onSettingClick = (setting: (typeof settings)[number]) => {
     setting.action?.();
     handleCloseUserMenu();
   };
@@ -61,7 +64,7 @@ const AppBar = () => {
   return (
     <ResponsiveAppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
+        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             noWrap
@@ -140,14 +143,17 @@ const AppBar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting.name} onClick={() => onSettingClick(setting)}>
+                    <MenuItem
+                      key={setting.name}
+                      onClick={() => onSettingClick(setting)}
+                    >
                       <Typography textAlign="center">{setting.name}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
               </>
             ) : (
-              <SignInButton mode="modal"   forceRedirectUrl='/'/>
+              <SignInButton mode="modal" forceRedirectUrl="/" />
             )}
           </Box>
         </Toolbar>

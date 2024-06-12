@@ -6,7 +6,7 @@ import CarCardInfo from "./carCardInfo";
 import { Car, Model } from "../../types";
 
 export type CarCardProps = Model &
-  Pick<Car, "bids" | "car_id" | "picture_urls" | "starting_price"> & {
+  Pick<Car, "bids" | "car_id" | "picture_urls" | "starting_price" | "description"> & {
     sellerId: Car["user_id"];
   };
 
@@ -19,12 +19,14 @@ const CarCard = (props: CarCardProps) => {
     starting_price,
     car_id,
     sellerId,
+    description,
   } = props;
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea href={`/view-car?car_id=${car_id}&seller_id=${sellerId}`}>
         <CarCardInfo
           starting_price={starting_price}
+          description={description}
           make={make}
           model={model}
           year={year}

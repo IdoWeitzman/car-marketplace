@@ -37,6 +37,7 @@ model cars {
   picture_urls   String[]
   created_at     DateTime? @default(now()) @db.Timestamptz(6)
   is_available   Boolean?  @default(true)
+  description    String?   @db.VarChar(1024)
   bids           bids[]
   carmodels      carmodels @relation(fields: [model_id], references: [model_id], onDelete: NoAction, onUpdate: NoAction)
 

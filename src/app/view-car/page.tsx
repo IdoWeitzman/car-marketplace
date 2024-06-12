@@ -30,8 +30,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export interface ViewCarProps {
   searchParams: {
-    car_id: Car['car_id'];
-    seller_id: Car['user_id'];
+    car_id: Car["car_id"];
+    seller_id: Car["user_id"];
   };
 }
 
@@ -52,11 +52,9 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
   };
 
   React.useEffect(() => {
-    axios
-      .get(`/view-car/api?car_id=${carId}`)
-      .then(({ data }) => {
-        setCarData(data);
-      })
+    axios.get(`/view-car/api?car_id=${carId}`).then(({ data }) => {
+      setCarData(data);
+    });
   }, [carId]);
 
   return (
@@ -65,6 +63,7 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
         {carData ? (
           <>
             <CarCardInfo
+              description={carData.description}
               starting_price={carData.starting_price}
               make={carData.carmodels.make}
               model={carData.carmodels.model}
@@ -86,16 +85,19 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-              <List>
-                {carData?.bids.map(({bid_time, bid_id, bid_amount}) => (
-                                 <ListItemText
-                                 key={bid_id}
-                                 primary={`${bid_amount}$`}
-                                 secondary={bid_time ? `Placed at: ${new Date(bid_time).toLocaleString()}`: null}
-                               />
-
-                ))}
-                                  </List>
+                <List>
+                  {carData?.bids.map(({ bid_time, bid_id, bid_amount }) => (
+                    <ListItemText
+                      key={bid_id}
+                      primary={`${bid_amount}$`}
+                      secondary={
+                        bid_time
+                          ? `Placed at: ${new Date(bid_time).toLocaleString()}`
+                          : null
+                      }
+                    />
+                  ))}
+                </List>
               </CardContent>
             </Collapse>
           </>

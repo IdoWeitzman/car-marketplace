@@ -14,27 +14,30 @@ export async function POST(request: PostBidModalBody) {
     user_id,
     starting_price,
     picture_urls,
+    description,
   } = await request.json();
   const prisma = new PrismaClient();
-
+  const yearInt = Number(year);
+  
   await prisma.cars.create({
     data: {
       user_id,
       starting_price,
       picture_urls,
+      description,
       carmodels: {
         connectOrCreate: {
           where: {
             make_model_year: {
               make,
               model,
-              year,
+              year: yearInt,
             },
           },
           create: {
             model,
             make,
-            year,
+            year: yearInt,
           },
         },
       },

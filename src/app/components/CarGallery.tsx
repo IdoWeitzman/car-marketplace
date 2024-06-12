@@ -26,6 +26,7 @@ const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
           starting_price,
           bids,
           user_id,
+          description
         }) => (
           <Grid key={car_id} item>
             <CarCard
@@ -37,6 +38,7 @@ const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
               picture_urls={picture_urls}
               starting_price={starting_price}
               bids={bids}
+              description={description}
             />
           </Grid>
         )
