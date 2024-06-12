@@ -35,6 +35,11 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
     });
   }, [carId]);
 
+  const highestBid = React.useMemo(() => carData?.bids.reduce((acc, bid) => {
+    const currBidAmount = Number(bid.bid_amount);
+    return currBidAmount > acc ? currBidAmount : acc;
+  }, 0), [carData])
+
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
@@ -64,6 +69,7 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
         open={isBidModalOpen}
         onClose={() => setIsBidModalOpen(false)}
         carId={carId}
+        highestBid={highestBid ?? Number(carData?.starting_price)}
       />
     </>
   );

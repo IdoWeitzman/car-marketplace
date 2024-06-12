@@ -17,9 +17,10 @@ export interface BidModalProps {
   open: boolean;
   onClose: () => void;
   carId: number;
+  highestBid: number;
 }
 
-const BidModal = ({ open, onClose, carId }: BidModalProps) => {
+const BidModal = ({ open, onClose, carId, highestBid}: BidModalProps) => {
   const { user } = useUser();
   const {
     handleSubmit,
@@ -28,7 +29,7 @@ const BidModal = ({ open, onClose, carId }: BidModalProps) => {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      bidAmount: 0,
+      bidAmount: highestBid + 1,
     },
   });
   const formWatcher = watch();
@@ -65,7 +66,7 @@ const BidModal = ({ open, onClose, carId }: BidModalProps) => {
                 name="bidAmount"
                 control={control}
                 render={({ field }) => (
-                  <Slider min={0} max={200000} {...field} />
+                  <Slider min={highestBid} max={200000} {...field} />
                 )}
               />
               <Typography>{formWatcher.bidAmount}$</Typography>
