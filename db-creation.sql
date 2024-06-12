@@ -27,3 +27,7 @@ CREATE TABLE Bids (
     bid_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (car_id) REFERENCES Cars(car_id)
 );
+
+CREATE INDEX idx_cars_user_id ON Cars(user_id);
+CREATE INDEX idx_bids_car_id ON Bids(car_id);
+CREATE INDEX idx_bids_user_id ON Bids(user_id);
