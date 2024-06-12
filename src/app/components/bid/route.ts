@@ -3,11 +3,11 @@ import { NextApiRequest } from "next";
 import { Car } from "../../types";
 
 export interface PostBidModalBody extends NextApiRequest {
-    json: () =>  Promise<{
-        value: number;
-        userId: Car['user_id'];
-        carId: Car['car_id'];
-    }>
+  json: () => Promise<{
+    value: number;
+    userId: Car["user_id"];
+    carId: Car["car_id"];
+  }>;
 }
 
 export async function POST(request: PostBidModalBody) {
@@ -22,5 +22,5 @@ export async function POST(request: PostBidModalBody) {
     },
   });
 
-  return Response.json({message: 'success'})
+  return Response.json({ message: "success" });
 }

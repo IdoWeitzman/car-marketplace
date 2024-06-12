@@ -5,8 +5,8 @@ import { Box, Grid } from "@mui/material";
 import { Car } from "../types";
 
 interface CarGelleryProps {
-  galleryUserId?: Car['user_id'];
-};
+  galleryUserId?: Car["user_id"];
+}
 
 const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
   const prisma = new PrismaClient();
@@ -26,7 +26,7 @@ const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
           starting_price,
           bids,
           user_id,
-          description
+          description,
         }) => (
           <Grid key={car_id} item>
             <CarCard

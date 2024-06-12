@@ -6,7 +6,10 @@ import CarCardInfo from "./carCardInfo";
 import { Car, Model } from "../../types";
 
 export type CarCardProps = Model &
-  Pick<Car, "bids" | "car_id" | "picture_urls" | "starting_price" | "description"> & {
+  Pick<
+    Car,
+    "bids" | "car_id" | "picture_urls" | "starting_price" | "description"
+  > & {
     sellerId: Car["user_id"];
   };
 

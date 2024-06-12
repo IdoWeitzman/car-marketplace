@@ -20,13 +20,13 @@ const PostCar = () => {
   const { handleSubmit, watch, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (user?.id) {
-     await axios.post("/post-car/api", {
+      await axios.post("/post-car/api", {
         ...data,
         picture_urls: [data.picture_url],
         user_id: user.id,
       });
 
-      window.location.href = '/manage-your-cars';
+      window.location.href = "/manage-your-cars";
     }
   };
 

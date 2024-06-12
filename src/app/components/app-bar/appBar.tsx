@@ -54,7 +54,7 @@ const AppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {isSignedIn ? (
-            <SignedInMenu />
+              <SignedInMenu />
             ) : (
               <SignInButton mode="modal" forceRedirectUrl="/" />
             )}

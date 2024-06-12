@@ -51,34 +51,34 @@ const BidModal = ({ open, onClose, carId }: BidModalProps) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={{...MODAL_STYLE, gap: 2}}>
+      <Box sx={{ ...MODAL_STYLE, gap: 2 }}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Place a bid
         </Typography>
         <Typography id="input-slider" gutterBottom>
           Amount
         </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Stack direction="column" gap={2}>
-              <Stack direction="row" gap={3} alignItems="center">
-                <Controller
-                  name="bidAmount"
-                  control={control}
-                  render={({ field }) => (
-                    <Slider min={0} max={200000} {...field} />
-                  )}
-                />
-                <Typography>{formWatcher.bidAmount}$</Typography>
-                {errors.bidAmount && <span>This field is required</span>}
-              </Stack>
-              <Stack alignItems="flex-end" width="100%">
-                <Button variant="contained" type="submit">
-                  {" "}
-                  Place Bid
-                </Button>
-              </Stack>
-              </Stack>
-            </form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack direction="column" gap={2}>
+            <Stack direction="row" gap={3} alignItems="center">
+              <Controller
+                name="bidAmount"
+                control={control}
+                render={({ field }) => (
+                  <Slider min={0} max={200000} {...field} />
+                )}
+              />
+              <Typography>{formWatcher.bidAmount}$</Typography>
+              {errors.bidAmount && <span>This field is required</span>}
+            </Stack>
+            <Stack alignItems="flex-end" width="100%">
+              <Button variant="contained" type="submit">
+                {" "}
+                Place Bid
+              </Button>
+            </Stack>
+          </Stack>
+        </form>
       </Box>
     </Modal>
   );

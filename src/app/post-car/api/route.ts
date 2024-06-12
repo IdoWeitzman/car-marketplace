@@ -18,7 +18,7 @@ export async function POST(request: PostBidModalBody) {
   } = await request.json();
   const prisma = new PrismaClient();
   const yearInt = Number(year);
-  
+
   await prisma.cars.create({
     data: {
       user_id,

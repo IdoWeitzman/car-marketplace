@@ -36,7 +36,7 @@ const CarCardInfo = (props: CarCardInfoProps) => {
     picture_urls: pictureUrls,
     starting_price: startingPrice,
   } = props;
-  console.log('description is', description)
+  console.log("description is", description);
   return (
     <>
       <CardHeader
