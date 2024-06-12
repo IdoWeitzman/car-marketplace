@@ -47,7 +47,6 @@ export interface ViewCarProps {
 const ViewCar = ({ searchParams }: ViewCarProps) => {
   const { seller_id: sellerId, car_id } = searchParams;
   const carId = Number(car_id);
-  console.log("car id is", searchParams);
   const [carData, setCarData] = React.useState<any>();
   const { isSignedIn, user } = useUser();
   const [expanded, setExpanded] = React.useState(false);
@@ -61,21 +60,14 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
     setIsBidModalOpen(true);
   };
 
-  console.log("in here...1");
   React.useEffect(() => {
-    console.log("in here...");
     axios
       .get(`/view-car/api?car_id=${carId}`)
       .then(({ data }) => {
-        console.log("car data is", data);
         setCarData(data);
       })
-      .catch((err) => {
-        console.log("in error", err);
-      });
   }, [carId]);
 
-  console.log("car data isss", carData);
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>

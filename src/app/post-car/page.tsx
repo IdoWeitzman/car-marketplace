@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -22,43 +22,67 @@ const style = {
 
 const PostCar = () => {
   const { user } = useUser();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = async(data: any) => { // TODO: type.
-        if(user?.id) {
-        const values = await axios.post('/post-car/api', {
-            ...data,
-            userId: user.id
-        });
-        console.log('value is', data)
-
-        }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data: any) => {
+    // TODO: type.
+    if (user?.id) {
+      const values = await axios.post("/post-car/api", {
+        ...data,
+        userId: user.id,
+      });
+    }
   };
 
   return (
-      <Box sx={style}>
-        <Typography id="input-slider" gutterBottom>
-          Amount
-        </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs>
+    <Box sx={style}>
+      <Typography id="input-slider" gutterBottom>
+        Amount
+      </Typography>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
           <form onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder="Make" type="text" {...register("make", { required: true })} />
-      <input placeholder="Model" type="text" {...register("model", { required: true })} />
-      <input placeholder="Year" type="number" {...register("year", { required: true, min: 1900, max: new Date().getFullYear() })} />
-      <input placeholder="Starting Price" type="number" {...register("startingPrice", { required: true, min: 0 })} />
-      <input placeholder="Picture Url" type="string" {...register("pictureUrl", { required: true })} />
+            <input
+              placeholder="Make"
+              type="text"
+              {...register("make", { required: true })}
+            />
+            <input
+              placeholder="Model"
+              type="text"
+              {...register("model", { required: true })}
+            />
+            <input
+              placeholder="Year"
+              type="number"
+              {...register("year", {
+                required: true,
+                min: 1900,
+                max: new Date().getFullYear(),
+              })}
+            />
+            <input
+              placeholder="Starting Price"
+              type="number"
+              {...register("startingPrice", { required: true, min: 0 })}
+            />
+            <input
+              placeholder="Picture Url"
+              type="string"
+              {...register("pictureUrl", { required: true })}
+            />
 
-      <input type="submit" value="Post car"/>
-    </form>
-
-          </Grid>
-          <Grid item>
-            {/* <Typography>{value}$</Typography> */}
-          </Grid>
+            <input type="submit" value="Post car" />
+          </form>
         </Grid>
-        <Stack direction="row" justifyContent="flex-end">
-        </Stack>
-      </Box>
+        <Grid item>{/* <Typography>{value}$</Typography> */}</Grid>
+      </Grid>
+      <Stack direction="row" justifyContent="flex-end"></Stack>
+    </Box>
   );
 };
 
