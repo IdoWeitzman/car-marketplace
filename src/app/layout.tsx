@@ -5,15 +5,16 @@ import {
   SignInButton,
   SignedIn,
   SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+  UserButton,
+} from "@clerk/nextjs";
 import "./globals.css";
 
 /* material-ui Roboto font */
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import AppBar from "./appBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,9 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html lang="en">
+        <body className={inter.className}>
+          <AppBar />
+          <div className="flex min-h-screen flex-col items-center justify-between p-8">
+            {children}
+          </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
