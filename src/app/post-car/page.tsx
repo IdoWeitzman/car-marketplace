@@ -2,13 +2,12 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { Button, Input, InputAdornment, Stack, TextField } from "@mui/material";
 import { useUser } from "@clerk/nextjs";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { Car, Model } from "../types";
 import { MODAL_STYLE } from "../common-styles";
+import FormControllers from "./formControllers";
 
 type FormValues = Model & {
   starting_price: Car["starting_price"];
@@ -19,7 +18,6 @@ type FormValues = Model & {
 const PostCar = () => {
   const { user } = useUser();
   const { handleSubmit, watch, control } = useForm<FormValues>();
-  const formWatcher = watch();
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (user?.id) {
      await axios.post("/post-car/api", {
@@ -38,55 +36,7 @@ const PostCar = () => {
         Place a bid
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack direction="column" gap={2}>
-          <Controller
-            name="make"
-            control={control}
-            render={({ field }) => <TextField {...field} label="Make" />}
-          />
-          <Controller
-            name="model"
-            control={control}
-            render={({ field }) => <TextField {...field} label="Model" />}
-          />
-          <Controller
-            name="year"
-            control={control}
-            render={({ field }) => (
-              <TextField type="number" label="Year" {...field} />
-            )}
-          />
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => <TextField {...field} label="Description" />}
-          />
-          <Controller
-            name="starting_price"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
-                }}
-                type="number"
-                label="Starting Price"
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            name="picture_url"
-            control={control}
-            render={({ field }) => <TextField label="Picture Url" {...field} />}
-          />
-
-          <Button type="submit" variant="contained">
-            Post car
-          </Button>
-        </Stack>
+        <FormControllers control={control} />
       </form>
     </Box>
   );
