@@ -1,35 +1,27 @@
+import { Car, Model } from "@/app/types";
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest } from "next";
 
 export interface PostBidModalBody extends NextApiRequest {
-  json: () => Promise<{
-    model: string;
-    make: string;
-    year: number;
-    startingPrice: number;
-    userId: string;
-    pictureUrl: string;
-  }>;
+  json: () => Promise<Car & Model>;
 }
 
 export async function POST(request: PostBidModalBody) {
   const {
     model,
     make,
-    year: yearAsString,
-    userId,
-    startingPrice: startingPriceAsString,
-    pictureUrl,
+    year,
+    user_id,
+    starting_price,
+    picture_urls,
   } = await request.json();
-  const year = Number(yearAsString);
-  const startingPrice = Number(startingPriceAsString);
   const prisma = new PrismaClient();
 
   await prisma.cars.create({
     data: {
-      user_id: userId,
-      starting_price: startingPrice,
-      picture_urls: [pictureUrl],
+      user_id,
+      starting_price,
+      picture_urls,
       carmodels: {
         connectOrCreate: {
           where: {

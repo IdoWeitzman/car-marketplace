@@ -3,11 +3,16 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { Stack } from "@mui/material";
+import { Button, Input, InputAdornment, Stack, TextField } from "@mui/material";
 import { useUser } from "@clerk/nextjs";
-import { useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
+import { Car, Model } from "../types";
 
+type FormValues = Model & {
+  startingPrice: Car["starting_price"];
+  pictureUrl: Car["picture_urls"][number];
+};
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -18,18 +23,16 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8
 };
 
 const PostCar = () => {
   const { user } = useUser();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = async (data: any) => {
-    // TODO: type.
+  const { register, handleSubmit, watch, control } = useForm<FormValues>();
+  const formWatcher = watch();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (user?.id) {
       const values = await axios.post("/post-car/api", {
         ...data,
@@ -40,48 +43,55 @@ const PostCar = () => {
 
   return (
     <Box sx={style}>
-      <Typography id="input-slider" gutterBottom>
-        Amount
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-              placeholder="Make"
-              type="text"
-              {...register("make", { required: true })}
-            />
-            <input
-              placeholder="Model"
-              type="text"
-              {...register("model", { required: true })}
-            />
-            <input
-              placeholder="Year"
-              type="number"
-              {...register("year", {
-                required: true,
-                min: 1900,
-                max: new Date().getFullYear(),
-              })}
-            />
-            <input
-              placeholder="Starting Price"
-              type="number"
-              {...register("startingPrice", { required: true, min: 0 })}
-            />
-            <input
-              placeholder="Picture Url"
-              type="string"
-              {...register("pictureUrl", { required: true })}
-            />
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Place a bid
+        </Typography>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack direction="column" gap={2}>
+          <Controller
+            name="make"
+            control={control}
+            render={({ field }) => <TextField {...field} label="Make" />}
+          />
+          <Controller
+            name="model"
+            control={control}
+            render={({ field }) => <TextField {...field} label="Model" />}
+          />
+          <Controller
+            name="year"
+            control={control}
+            render={({ field }) => (
+              <TextField type="number" label="Year" {...field} />
+            )}
+          />
+          <Controller
+            name="startingPrice"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
+                }}
+                type="number"
+                label="Starting Price"
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="pictureUrl"
+            control={control}
+            render={({ field }) => <TextField label="Picture Url" {...field} />}
+          />
 
-            <input type="submit" value="Post car" />
-          </form>
-        </Grid>
-        <Grid item>{/* <Typography>{value}$</Typography> */}</Grid>
-      </Grid>
-      <Stack direction="row" justifyContent="flex-end"></Stack>
+          <Button type="submit" variant="contained">
+            Post car
+          </Button>
+        </Stack>
+      </form>
     </Box>
   );
 };

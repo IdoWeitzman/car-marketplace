@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest } from "next";
+import { Car } from "../../types";
 
 export interface PostBidModalBody extends NextApiRequest {
     json: () =>  Promise<{
         value: number;
-        userId: string;
-        carId: number;
+        userId: Car['user_id'];
+        carId: Car['car_id'];
     }>
 }
 
@@ -21,6 +22,5 @@ export async function POST(request: PostBidModalBody) {
     },
   });
 
-  console.log('create response', createResponse)
   return Response.json({message: 'success'})
 }

@@ -3,7 +3,7 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import CarCardInfo from "./carCardInfo";
-import { Car, Model } from "./types";
+import { Car, Model } from "../../types";
 
 export type CarCardProps = Model &
   Pick<Car, "bids" | "car_id" | "picture_urls" | "starting_price"> & {

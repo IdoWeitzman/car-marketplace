@@ -1,7 +1,4 @@
-import Image from "next/image";
-import { SignInButton } from "@clerk/nextjs";
-import AppBar from "./appBar";
-import CarGellery from "./CarGallery";
+import CarGellery from "./components/CarGallery";
 
 export default function Home() {
   return (

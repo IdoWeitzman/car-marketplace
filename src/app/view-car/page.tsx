@@ -2,26 +2,17 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useUser } from "@clerk/nextjs";
-import { Button } from "@mui/material";
-import BidModal from "../bid/BidModal";
-import { Prisma } from "@prisma/client";
+import { Button, List, ListItemText } from "@mui/material";
+import BidModal from "../components/bid/BidModal";
 import axios from "axios";
-import { NextPageContext } from "next";
-import CarCardInfo from "../carCardInfo";
+import CarCardInfo from "../components/car-card/carCardInfo";
+import { Car } from "../types";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -39,15 +30,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export interface ViewCarProps {
   searchParams: {
-    car_id: string;
-    seller_id: string;
+    car_id: Car['car_id'];
+    seller_id: Car['user_id'];
   };
 }
 
 const ViewCar = ({ searchParams }: ViewCarProps) => {
   const { seller_id: sellerId, car_id } = searchParams;
   const carId = Number(car_id);
-  const [carData, setCarData] = React.useState<any>();
+  const [carData, setCarData] = React.useState<Car>();
   const { isSignedIn, user } = useUser();
   const [expanded, setExpanded] = React.useState(false);
   const [isBidModalOpen, setIsBidModalOpen] = React.useState(false);
@@ -74,11 +65,11 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
         {carData ? (
           <>
             <CarCardInfo
-              startingPrice={carData.starting_price}
+              starting_price={carData.starting_price}
               make={carData.carmodels.make}
               model={carData.carmodels.model}
               year={carData.carmodels.year}
-              pictureUrls={carData.picture_urls}
+              picture_urls={carData.picture_urls}
             />
             <CardActions disableSpacing>
               {shouldShowBidButton && <Button onClick={onBidClick}>Bid</Button>}
@@ -95,14 +86,21 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                {carData?.bids.map((bid: any) => (
-                  <div key={bid.bid_id}>{JSON.stringify(bid)}</div>
+              <List>
+                {carData?.bids.map(({bid_time, bid_id, bid_amount}) => (
+                                 <ListItemText
+                                 key={bid_id}
+                                 primary={`${bid_amount}$`}
+                                 secondary={bid_time ? `Placed at: ${new Date(bid_time).toLocaleString()}`: null}
+                               />
+
                 ))}
+                                  </List>
               </CardContent>
             </Collapse>
           </>
         ) : (
-          <div>loading card data...</div>
+          <div>loading car data...</div>
         )}
       </Card>
       <BidModal

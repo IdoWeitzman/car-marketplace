@@ -1,11 +1,13 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-import CarCard from "./carCard";
+import CarCard from "./car-card/carCard";
 import { Box, Grid } from "@mui/material";
+import { Car } from "../types";
 
 interface CarGelleryProps {
-  galleryUserId?: string;
-}
+  galleryUserId?: Car['user_id'];
+};
+
 const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
   const prisma = new PrismaClient();
   const filterByUserId = galleryUserId ? { user_id: galleryUserId } : {};
@@ -28,12 +30,12 @@ const CarGellery = async ({ galleryUserId }: CarGelleryProps) => {
           <Grid key={car_id} item>
             <CarCard
               sellerId={user_id}
-              carId={car_id}
+              car_id={car_id}
               make={make}
               year={year}
               model={model}
-              pictureUrls={picture_urls}
-              startingPrice={starting_price}
+              picture_urls={picture_urls}
+              starting_price={starting_price}
               bids={bids}
             />
           </Grid>

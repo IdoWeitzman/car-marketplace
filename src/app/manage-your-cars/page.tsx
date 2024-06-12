@@ -1,17 +1,11 @@
-"use server"
-import CarGallery from "../CarGallery";
-import { ManageYourCarsProps } from "./types";
+"use server";
+import CarGallery from "../components/CarGallery";
 import { auth } from "@clerk/nextjs/server";
 
-const ManageYourCarsPage = (props: ManageYourCarsProps) => {
-  const {userId} = auth();
+const ManageYourCarsPage = () => {
+  const { userId } = auth();
 
-    console.log('user is is', userId)
-  return (
-    <div>
-      <CarGallery galleryUserId={userId ?? ''} />
-    </div>
-  );
+  return <CarGallery galleryUserId={userId ?? ""} />;
 };
 
 export default ManageYourCarsPage;
