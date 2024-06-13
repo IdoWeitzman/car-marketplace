@@ -16,11 +16,12 @@ interface FormValues {
 export interface BidModalProps {
   open: boolean;
   onClose: () => void;
+  onSubmitBid: () => void;
   carId: number;
   highestBid: number;
 }
 
-const BidModal = ({ open, onClose, carId, highestBid}: BidModalProps) => {
+const BidModal = ({ open, onClose, carId, highestBid, onSubmitBid}: BidModalProps) => {
   const { user } = useUser();
   const {
     handleSubmit,
@@ -42,7 +43,7 @@ const BidModal = ({ open, onClose, carId, highestBid}: BidModalProps) => {
       });
     }
 
-    setTimeout(onClose, 1000);
+    onSubmitBid();
   };
 
   return (

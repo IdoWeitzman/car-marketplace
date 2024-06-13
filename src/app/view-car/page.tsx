@@ -7,6 +7,7 @@ import CarCardInfo from "../components/car-card/carCardInfo";
 import { Car } from "../types";
 import CarCardBids from "./carCardBids";
 import CarCardActions from "./carCardActions";
+import { useRouter } from "next/navigation";
 
 export interface ViewCarProps {
   searchParams: {
@@ -16,6 +17,7 @@ export interface ViewCarProps {
 }
 
 const ViewCar = ({ searchParams }: ViewCarProps) => {
+  const router = useRouter();
   const { seller_id: sellerId, car_id } = searchParams;
   const carId = Number(car_id);
   const [carData, setCarData] = React.useState<Car>();
@@ -35,10 +37,26 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
     });
   }, [carId]);
 
-  const highestBid = React.useMemo(() => carData?.bids.reduce((acc, bid) => {
-    const currBidAmount = Number(bid.bid_amount);
-    return currBidAmount > acc ? currBidAmount : acc;
-  }, 0), [carData])
+  const highestBid = React.useMemo(
+    () =>
+      carData?.bids.reduce((acc, bid) => {
+        const currBidAmount = Number(bid.bid_amount);
+        return currBidAmount > acc ? currBidAmount : acc;
+      }, 0),
+    [carData]
+  );
+
+  const onBidModalClose = () => {
+    setIsBidModalOpen(false);
+  };
+
+  const onBidModalSubmit = () => {
+    onBidModalClose();
+
+    React.startTransition(() => {
+      router.refresh();
+    });
+  };
 
   return (
     <>
@@ -66,8 +84,9 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
         )}
       </Card>
       <BidModal
+      onSubmitBid={onBidModalSubmit}
         open={isBidModalOpen}
-        onClose={() => setIsBidModalOpen(false)}
+        onClose={onBidModalClose}
         carId={carId}
         highestBid={highestBid ?? Number(carData?.starting_price)}
       />
