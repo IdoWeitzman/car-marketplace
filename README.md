@@ -16,11 +16,19 @@
 
 DATABASE_URL="postgresql://<your_pc_user>:<your_pc_password>W@localhost:5432/car-marketplace?schema=public"
 ```
+3. Create .env.local file (for Clerk creds and OpenAI key) in the root of the project. add this content to the file:
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
+CLERK_SECRET_KEY=<your_clerk_secret_key>
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+OPENAI_API_KEY=<your_open_ai_key>
 
 Change the pc_user and pc_password to match your machine creds. </br>
-3. Run npm install  </br>
-4. Run npm run dev  </br>
-5. navigate to http://localhost:3000 and you are good to go :)   </br>
+4. Run npm install  </br>
+5. Run npm run dev  </br>
+6. navigate to http://localhost:3000 and you are good to go :)   </br>
 
 ## My Approach 
 I tried to create a project that is easy to maintain/refactor and add tests to. </br>
