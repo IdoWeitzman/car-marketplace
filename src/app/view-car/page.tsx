@@ -57,6 +57,7 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
       router.refresh();
     });
   };
+  console.log('highest bid is', highestBid, Number(carData?.starting_price))
 
   return (
     <>
@@ -88,7 +89,7 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
         open={isBidModalOpen}
         onClose={onBidModalClose}
         carId={carId}
-        highestBid={highestBid ?? Number(carData?.starting_price)}
+        highestBid={Number(highestBid ?? carData?.starting_price)}
       />
     </>
   );

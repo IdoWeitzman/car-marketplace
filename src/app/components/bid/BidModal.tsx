@@ -23,6 +23,7 @@ export interface BidModalProps {
 
 const BidModal = ({ open, onClose, carId, highestBid, onSubmitBid}: BidModalProps) => {
   const { user } = useUser();
+  const bidAmountInitialValue = highestBid + 1;
   const {
     handleSubmit,
     watch,
@@ -30,13 +31,14 @@ const BidModal = ({ open, onClose, carId, highestBid, onSubmitBid}: BidModalProp
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      bidAmount: highestBid + 1,
+      bidAmount: bidAmountInitialValue,
     },
   });
   const formWatcher = watch();
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     if (user?.id) {
-      await axios.post("/bid", {
+      await axios.post("/api//bid", {
         value: data.bidAmount,
         userId: user.id,
         carId: carId,
@@ -70,12 +72,11 @@ const BidModal = ({ open, onClose, carId, highestBid, onSubmitBid}: BidModalProp
                   <Slider min={highestBid} max={200000} {...field} />
                 )}
               />
-              <Typography>{formWatcher.bidAmount}$</Typography>
+              <Typography>{Number.isNaN(formWatcher.bidAmount) ? bidAmountInitialValue : formWatcher.bidAmount}$</Typography>
               {errors.bidAmount && <span>This field is required</span>}
             </Stack>
             <Stack alignItems="flex-end" width="100%">
               <Button variant="contained" type="submit">
-                {" "}
                 Place Bid
               </Button>
             </Stack>
