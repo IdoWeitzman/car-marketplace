@@ -57,7 +57,6 @@ const ViewCar = ({ searchParams }: ViewCarProps) => {
       router.refresh();
     });
   };
-  console.log('highest bid is', highestBid, Number(carData?.starting_price))
 
   return (
     <>
