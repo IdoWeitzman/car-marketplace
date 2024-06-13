@@ -46,8 +46,12 @@ In the ui side I tried to make the components as modular as possible.
 I had to learn some new stuff- Prisma and react-hook-form. Prisma is awesome. However, it took me about 20 minutes to understand how to use it properly with typescript.
 It's also the first time i'm developing real app with React Server Components, so it slowed me down at first. To overcome both challenges, i took a short pause and read about the stuff that I don't understand.
 
+
 ## Trade offs
 The project is missing:
 1. Tests (unit, integration, e2e). The test code is easily testable.
 2. error handling - what happens if api call fails? what happens if db insertion fails?
 3. validations - for example: when bidding validating in the server that the current bid is higher than the highest bid.
+
+## Tech debt
+For some reason when logging-in using clerk i'm not being redirected to my site homepage. I didn't get the chance to investigate that
