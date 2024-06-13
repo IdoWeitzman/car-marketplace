@@ -47,6 +47,7 @@ I had to learn some new stuff- Prisma and react-hook-form. Prisma is awesome. Ho
 It's also the first time i'm developing real app with React Server Components, so it slowed me down at first. To overcome both challenges, i took a short pause and read about the stuff that I don't understand.
 
 ## Trade offs
-I didn't write any tests because of time constraints, but the code is defenitely testable.
-
-## Left out
+The project is missing:
+1. Tests (unit, integration, e2e). The test code is easily testable.
+2. error handling - what happens if api call fails? what happens if db insertion fails?
+3. validations - for example: when bidding validating in the server that the current bid is higher than the highest bid.
