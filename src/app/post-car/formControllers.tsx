@@ -1,8 +1,11 @@
 "use client";
 import * as React from "react";
 import { Button, Input, InputAdornment, Stack, TextField } from "@mui/material";
-import { Control, Controller } from "react-hook-form";
+import TextArea from "../components/TextArea";
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import { Car, Model } from "../types";
+import axios from "axios";
 
 type FormValues = Model & {
   starting_price: Car["starting_price"];
@@ -12,9 +15,24 @@ type FormValues = Model & {
 
 interface FormControllersProps {
   control: Control<FormValues, any>;
+  formValues: FormValues;
+  setFormValue: UseFormSetValue<FormValues>
 }
 
-const FormControllers = ({ control }: FormControllersProps) => {
+const FormControllers = ({ control, formValues, setFormValue }: FormControllersProps) => {
+  const onGenerateClick = async () => {
+    const { make, model, year, picture_url } = formValues;
+
+    const res = await axios.post("/api/chatgpt", {
+      make,
+      model,
+      year,
+      picture_url,
+    });
+
+    setFormValue("description", res.data.result)
+  };
+
   return (
     <Stack direction="column" gap={2}>
       <Controller
@@ -34,11 +52,7 @@ const FormControllers = ({ control }: FormControllersProps) => {
           <TextField type="number" label="Year" {...field} />
         )}
       />
-      <Controller
-        name="description"
-        control={control}
-        render={({ field }) => <TextField {...field} label="Description" />}
-      />
+
       <Controller
         name="starting_price"
         control={control}
@@ -60,6 +74,20 @@ const FormControllers = ({ control }: FormControllersProps) => {
         control={control}
         render={({ field }) => <TextField label="Picture Url" {...field} />}
       />
+
+      <Controller
+        name="description"
+        control={control}
+        render={({ field }) => (
+          <TextArea
+            {...field}
+            value={field.value ?? ""}
+            placeholder="Description"
+            minRows={10}
+          />
+        )}
+      />
+      <Button startIcon={<AutoFixHighIcon/>} sx={{marginBottom: '32px'}} onClick={onGenerateClick}>Generate Description with AI</Button>
 
       <Button type="submit" variant="contained">
         Post car

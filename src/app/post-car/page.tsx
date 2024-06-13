@@ -8,6 +8,7 @@ import axios from "axios";
 import { Car, Model } from "../types";
 import { MODAL_STYLE } from "../common-styles";
 import FormControllers from "./formControllers";
+import { Button } from "@mui/material";
 
 type FormValues = Model & {
   starting_price: Car["starting_price"];
@@ -17,7 +18,9 @@ type FormValues = Model & {
 
 const PostCar = () => {
   const { user } = useUser();
-  const { handleSubmit, watch, control } = useForm<FormValues>();
+  const { handleSubmit, watch, control, setValue } = useForm<FormValues>();
+  const formValues = watch();
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (user?.id) {
       await axios.post("/post-car/api", {
@@ -36,7 +39,7 @@ const PostCar = () => {
         Place a bid
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControllers control={control} />
+        <FormControllers control={control} formValues={formValues} setFormValue={setValue} />
       </form>
     </Box>
   );
